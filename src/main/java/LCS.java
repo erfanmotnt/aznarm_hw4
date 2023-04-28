@@ -26,17 +26,17 @@ public class LCS {
     public static String longest_common_substring(String s1, String s2) {
         int max = -1;
         String maxsub = "";
-        for(int i = 0; i < s1.length(); i++) {
-            for(int j = i+1; j < s1.length(); j++) {
-                for(int k = 0; k < s2.length(); k++) {
-                    for(int t = k+1; t < s2.length(); t++) {
-                        if(s1.substring(i, j).equals(s2.substring(k, t))) {
-                            String s = s1.substring(i, j);
-                            if(s.length() > max) {
-                                max = s.length();
-                                maxsub = s;
-                            }
-                        }
+        int[][] LCSuff = new int[s1.length() + 1][s2.length() + 1];
+        for(int i = 0; i <= s1.length(); i++) {
+            for(int k = 0; k <= s2.length(); k++) {
+                if(i ==0 || k ==0) {
+                    LCSuff[i][k] = 0;
+                }
+                else if(s1.charAt(i-1) == s2.charAt(k-1)) {
+                    LCSuff[i][k] = LCSuff[i - 1][k - 1] + 1;
+                    if(LCSuff[i][k] > max) {
+                        max = LCSuff[i][k];
+                        maxsub = s1.substring(i - max,i);
                     }
                 }
             }
